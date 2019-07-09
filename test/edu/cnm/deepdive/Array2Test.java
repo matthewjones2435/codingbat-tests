@@ -3,8 +3,11 @@ package edu.cnm.deepdive;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class Array2Test {
+
   Array2 array = new Array2();
   Array2 arrayTwo = new Array2();
   Array2 arrayThree = new Array2();
@@ -14,16 +17,36 @@ class Array2Test {
   Array2 arraySeven = new Array2();
 
 
-  int [] test1 = new int[] {1, 2, 2};
-  int [] test2 = new int[] {4,4,1};
-  int [] test3 = new int[] {1,2,3,4,4};
-  int [] test4 = new int[] {2,2,3,4};
-  int [] test5 = new int[] {1,2,3,2,2,4};
-  int [] test6 = new int[] {2,2};
-  int [] test7 = new int[] {4,4};
+  static Object[][] input = {
+      {new int[]{1, 2, 2}, true},
+      {new int[]{4, 4, 1}, true},
+      {new int[]{1, 2, 3, 4, 4}, true},
+      {new int[]{2, 2, 3, 4}, true},
+      {new int[]{1, 2, 3, 2, 2, 4}, true},
+      {new int[]{2, 2}, true},
+      {new int[]{4, 4}, true},
+      {new int[] {4,4,1,2,2}, false},
+      {new int[] {1,2,3,4}, false},
+      {new int[] {3,5,9}, false},
+      {new int[] {1,2,3,2,2,4,4}, false},
+      {new int[] {1,2}, false},
+      {new int[] {2}, false},
+      {new int[] {}, false}
+  };
 
-  @Test
-  void either24(int[] test1) {
-    assertTrue(array.either24(test1));
+  private static Object[][] either24Source() {
+    return input;
+  }
+
+
+  @ParameterizedTest
+  @MethodSource("either24Source")
+  void either24(int[] nums, boolean expected) {
+    boolean actual = array.either24(nums);
+    if (expected) {
+      assertTrue(actual);
+    } else {
+      assertFalse(actual);
+    }
   }
 }

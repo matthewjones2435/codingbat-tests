@@ -9,7 +9,7 @@ public class Array2 {
       }
     return false;
   }
-  
+
 
 }
 
